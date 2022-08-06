@@ -62,11 +62,12 @@
                                          class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
                                         {{ $page }}
                                     </button>--}}
-                                    <a
-                                        href="{{ $url }}"
+                                    
+                                    <button
+                                         wire:click="gotoPage({{$page}})"
                                         class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
                                         {{ $page }}
-                                    </a>
+                                    </button>
                                    </li>
                             @endif
                         @endforeach
