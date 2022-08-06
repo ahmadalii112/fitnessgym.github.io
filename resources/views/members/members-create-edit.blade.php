@@ -41,7 +41,7 @@
 
                 <!-- Email-->
                 <x-input.group label="Email" for="email" :error="$errors->first('email')">
-                    <x-input.text  id="email" name="email" placeholder="name@mail.com">
+                    <x-input.text  id="email" name="email" value="{{ old('email', isset($user) ? $user->email : '' ) }}" placeholder="name@mail.com">
                         <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">

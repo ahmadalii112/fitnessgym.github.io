@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::view('/', 'homepage');
+Route::view('/about', 'homepage1');
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
