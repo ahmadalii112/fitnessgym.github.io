@@ -25,9 +25,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'firstname', 'middlename', 'lastname', 'gender', 'date_of_birth', 'phone', 'mobile', 'cnic', 'email', 'password', 'address', 'height', 'weight'
     ];
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -58,17 +57,32 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
     public const GENDER = [
-        '1' => 'Male',
-        '2' => 'Female',
-        '3' => 'Other',
+        'Male' => 'Male',
+        'Female' => 'Female',
+        'Other' => 'Other',
     ];
+
+    public function setHeightAttribute($value)
+    {
+        $this->attributes['height'] = $value;
+    }
+
+    public function getFullHeightAttribute()
+    {
+        return explode(' ', $this->height);
+    }
+
+    public function getFullNameAttribute()
+    {
+        return $this->firstname ." ". $this->middlename ." ". $this->lastname;
+    }
 
     public function getStatusColorAttribute()
     {
         return [
-            'process' => 'indigo',
-            'paid' => 'green',
-            'unpaid' => 'red',
-        ][$this->status] ?? 'cool-gray';
+                'process' => 'indigo',
+                'paid' => 'green',
+                'unpaid' => 'red',
+            ][$this->status] ?? 'cool-gray';
     }
 }

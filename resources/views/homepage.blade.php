@@ -25,7 +25,7 @@
     <div class="flex items-center flex-shrink-0 text-dark md:text-right mr-6">
         <ul class="flex items-center flex-shrink-0 space-x-6">
             <!-- Theme toggler -->
-            <li class="flex">
+            <li class="flex text-purple-600 dark:text-purple-300">
                 <button class="rounded-md focus:outline-none focus:shadow-outline-purple" @click="toggleTheme" aria-label="Toggle color mode">
                     <template x-if="!dark">
                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -57,10 +57,7 @@
     </div>
 
 </nav>
-
-<div class="py-20 bg-cover bg-no-repeat bg-fixed"
-     id="home"
-{{--     style="background-image: url(https://media.vanityfair.com/photos/5ce426151c0b0773cacd1121/master/pass/star-wars-feature-vf-2019-summer-embed-05.jpg)">--}}
+<div class="py-20 bg-cover bg-no-repeat bg-fixed" id="home"
      style="background-image: url({{asset('img/kyle-johnson-Yi-4X9ZJU6Y-unsplash.jpg')}})">
     <div class="container m-auto text-center px-6 opacity-100" data-aos="fade-in">
         <h2 class="text-4xl font-bold mb-2 text-white">Echo Base...I've got something!</h2>
@@ -84,7 +81,8 @@
                 control....Fire! The first transport is away.</p>
         </div>
         <div class="w-full md:w-1/2" data-aos="fade-left">
-            <img class="rounded-lg" src="{{ asset('img/bicep-curls.png')}}" alt="Vortex"/>
+            <img class="rounded-lg dark:hidden" src="{{ asset('img/bicep-curls.png')}}" alt="Vortex"/>
+            <img class="hidden rounded-lg dark:block" aria-hidden="true" src="{{ asset('img/gym/tricep.jpg')}}" alt="Office"/>
         </div>
     </div>
     <div class="flex items-center flex-wrap mb-20">
@@ -111,7 +109,7 @@
     </div>
 </section>
 
-<hr class="dark:bg-gray-800">
+<hr class="dark:bg-black">
 <!-- Section 5 -->
 <section class="flex items-center justify-center py-20 bg-white min-w-screen dark:bg-gray-800">
     <div class="px-16 bg-white dark:bg-gray-800">
