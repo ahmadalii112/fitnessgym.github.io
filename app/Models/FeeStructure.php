@@ -9,7 +9,7 @@ class FeeStructure extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id', 'user_id', 'admission_fee', 'monthly_fee', 'admission_date', 'issue_fee_date', 'due_fee_date', 'status', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'user_id', 'admission_fee', 'total_fee_by_user', 'monthly_fee', 'admission_date', 'issue_fee_date', 'due_fee_date', 'status', 'created_at', 'updated_at'];
     public const Status = [
         'Paid' => 'Paid',
         'Unpaid' => 'Unpaid',

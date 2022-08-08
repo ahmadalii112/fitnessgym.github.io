@@ -13,15 +13,17 @@
         </div>
       </div>
     </div>
-    <a href="{{ route('members.create')  }}">
-      <x-button class="px-4 py-2 text-sm font-medium">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-             stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round"
-                d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
-        </svg>
-      </x-button>
-    </a>
+    @if(request()->routeIs('members.index'))
+      <a href="{{ route('members.create')  }}">
+        <x-button class="px-4 py-2 text-sm font-medium">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+          </svg>
+        </x-button>
+      </a>
+    @endif
   </div>
   <div class="w-full overflow-hidden rounded-lg shadow-xs">
     <div class="w-full">
@@ -36,15 +38,14 @@
           <x-table.heading sortable wire:click="sortBy('phone')"
                            :direction="$sortField === 'phone' ? $sorDirection : null ">Phone
           </x-table.heading>
-          @if(request()->routeIs('members.*'))
-            <x-table.heading sortable wire:click="sortBy('created_at')"
-                             :direction="$sortField === 'created_at' ? $sorDirection : null ">Admission Date
-            </x-table.heading>
-            <x-table.heading>Actions</x-table.heading>
-          @else
-            <x-table.heading>Fee Date</x-table.heading>
-            <x-table.heading>Due Fee</x-table.heading>
-          @endif
+          <x-table.heading sortable wire:click="sortBy('created_at')"
+                           :direction="$sortField === 'created_at' ? $sorDirection : null ">Admission Date
+          </x-table.heading>
+          <x-table.heading>Fee Date</x-table.heading>
+          {{--          <x-table.heading>Due Fee</x-table.heading>--}}
+
+          <x-table.heading>Actions</x-table.heading>
+
         </x-slot>
         <x-slot name="body">
           @forelse($users as $user)
@@ -89,53 +90,72 @@
                   </div>
                 </div>
               </x-table.cell>
-              @if(request()->routeIs('members.*'))
-                <x-table.cell>
-                  {{--                        <span class="px-2 py-1 font-semibold leading-tight text-{{$user->status_color}}-700 bg-{{$user->status_color}}-100 rounded-full dark:text-white dark:bg-{{$user->status_color}}-600"></span>--}}
-                  {{$user->created_at->format('M d, Y')}}
-                </x-table.cell>
-                <x-table.cell>
-                  <div class="flex items-center space-x-4 text-sm">
-                    <a href="{{ route('members.edit', $user->gym_id) }}">
-                      <button
-                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                        aria-label="Edit">
-                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
-                             viewBox="0 0 20 20">
-                          <path
-                            d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
-                          </path>
-                        </svg>
-                      </button>
-                    </a>
+              <x-table.cell>
+                {{$user->created_at->format('M d, Y')}}
+              </x-table.cell>
+
+              <x-table.cell>
+                <div class="flex items-center">
+                  <div>
+                    @if( feeDueDateStatus($user) > 0)
+                    <p class="text-sm text-gray-600 dark:text-gray-400"><span
+                        class="font-semibold">Issue Date: </span>{{\Carbon\Carbon::parse($user->feeStructure->issue_fee_date)->format('M d, Y') ?? 'N/A'}}
+                    </p>
+                    @endif
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                      @if( feeDueDateStatus($user) > 0)
+                        <span class="font-semibold">Remaining Days: </span> {{  feeDueDateStatus($user) ?? 'N/A' }}
+                        Days Remaining
+                      @elseif(is_null(feeDueDateStatus($user)))
+                        N/A
+                      @else
+                        <button wire:click="confirmUserFee({{ $user->id }})"
+                                wire:loading.attr="disabled"
+                                class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purplem">
+                          Click to Pay
+                        </button>
+                      @endif
+                    </p>
+                  </div>
+                </div>
+
+              </x-table.cell>
+
+              {{--           <x-table.cell>{{$user->feeStructure->issue_fee_date ?? 'N/A'}}</x-table.cell>
+                         <x-table.cell>
+
+
+                         </x-table.cell>--}}
+
+
+              <x-table.cell>
+                <div class="flex items-center space-x-4 text-sm">
+                  <a href="{{ route('members.edit', $user->gym_id) }}">
                     <button
-                      wire:click="confirmUserDeletion({{ $user->id }})"
-                      wire:loading.attr="disabled"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                      aria-label="Delete">
+                      aria-label="Edit">
                       <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
                            viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                              d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                              clip-rule="evenodd"></path>
+                        <path
+                          d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                        </path>
                       </svg>
                     </button>
-                  </div>
-                </x-table.cell>
-              @else
-                <x-table.cell>{{$user->feeStructure->issue_fee_date ?? 'N/A'}}</x-table.cell>
-                <x-table.cell>
-                  @if( feeDueDateStatus($user) > 0)
-                    {{  feeDueDateStatus($user) ?? 'N/A' }}
-                    Days Remaining
-                  @elseif(is_null(feeDueDateStatus($user)))
-                    N/A
-                  @else
-                    <x-button>Unpaid</x-button>
-                  @endif
-
-                </x-table.cell>
-              @endif
+                  </a>
+                  <button
+                    wire:click="confirmUserDeletion({{ $user->id }})"
+                    wire:loading.attr="disabled"
+                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                    aria-label="Delete">
+                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
+                         viewBox="0 0 20 20">
+                      <path fill-rule="evenodd"
+                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                  </button>
+                </div>
+              </x-table.cell>
             </x-table.row>
           @empty
             <x-table.row>
@@ -160,7 +180,62 @@
     </div>
   </div>
 
-  {{-- Modal Start --}}
+  {{-- Fee Paying Modal Start --}}
+  {{--  @if($confirmingUserFee)--}}
+  <x-modal wire:model="confirmingUserFee">
+    <div class="p-6">
+      <div class="grid place-content-center">
+        <div
+          class="h-16 w-16 inline-grid place-content-center m-auto p-3 text-green-600 bg-green-200 rounded-full ">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+          </svg>
+        </div>
+        <h2 class="text-black text-xl font-semibold	mt-3">Are You Sure?</h2>
+      </div>
+
+      <div class="my-3">
+        <p class="text-sm text-gray-500 text-center ">Do you really want to delete <span
+            class="font-semibold"> {{ $full_name ?? 'User' }}</span> ?
+        </p>
+        <p class="text-sm text-gray-500 text-center">This process cannot be undone</p>
+        <x-input.text wire:model="monthly_fee" id="monthly_fee" name="monthly_fee" type="number"
+                      placeholder="Enter Monthly fee">
+          <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                 stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+          </div>
+        </x-input.text>
+        <x-input-error for="monthly_fee" class="mt-1 text-xs text-red-600 dark:text-red-400"/>
+
+      </div>
+
+
+      <div
+        class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800">
+        <button
+          class="w-full px-5 py-3 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gra"
+          wire:click="$set('confirmingUserFee', false)"
+          wire:loading.attr="disabled">
+          {{ __('Cancel') }}
+        </button>
+        <button wire:click="feePayUser({{ $confirmingUserFee  }})"
+                class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                wire:loading.attr="disabled">
+          {{ __('Pay Fee') }}
+        </button>
+      </div>
+    </div>
+  </x-modal>
+  {{--  @endif--}}
+  {{-- Fee Paying Modal End --}}
+
+  {{-- Delete  Modal Start --}}
   @if($confirmingUserDeletion)
     <x-modal wire:model="confirmingUserDeletion">
       <div class="p-6">

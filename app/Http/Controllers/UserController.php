@@ -15,11 +15,11 @@ class UserController extends Controller
     public function dashboard()
     {
         $totalMembers = User::where('id', '!=' ,auth()->id())->count();
-        $totalAmount = FeeStructure::select(DB::raw('sum(monthly_fee + admission_fee) as total'))->value('total') ?? 0;
+        $totalAmount = FeeStructure::select(DB::raw('sum(total_fee_by_user + admission_fee) as total'))->value('total') ?? 0;
         $currentYearMonth = now()->format('Y-m');
         if (FeeStructure::get()->isNotEmpty()) {
             $this->newMembers = FeeStructure::where('admission_date', 'Like', '%' . $currentYearMonth. '%')->count();
-            $this->pendingDues = FeeStructure::whereRaw('issue_fee_date >= due_fee_date')->count();
+            $this->pendingDues = FeeStructure::where('due_fee_date', '<=', dateForHumans())->count();
         }
         return view('dashboard', compact('totalMembers', 'totalAmount'))
             ->with('newMembers', $this->newMembers)
@@ -43,11 +43,12 @@ class UserController extends Controller
         # dd(array_merge($request->validated(), ['height' => $request->feet]));
         $user = User::create($request->validated() + ['height' => $request->feet . " " . $request->inches]);
         // Todo: Gym fee
-        $currentDate = now()->format('Y-m-d');
+        $currentDate = dateForHumans();
         $currentMonthDate = Carbon::parse($currentDate);
         $nextMonthDate = $currentMonthDate->addMonth()->format('Y-m-d');
         $user->feeStructure()->create([
             'admission_fee' => $request->admission_fee ?? 0,
+            'total_fee_by_user' => $request->monthly_fee,
             'monthly_fee' => $request->monthly_fee,
             'admission_date' => $currentDate,
             'issue_fee_date' => $currentDate,
