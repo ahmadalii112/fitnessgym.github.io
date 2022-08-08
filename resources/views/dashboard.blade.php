@@ -4,7 +4,7 @@
             Dashboard
         </h2>
 
-        {{--  <!-- Cards -->
+          <!-- Cards -->
           <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
               <!-- Card -->
               <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
@@ -16,10 +16,10 @@
                   </div>
                   <div>
                       <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                          Total clients
+                          Total Members
                       </p>
                       <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                          6389
+                          {{ $totalMembers }}
                       </p>
                   </div>
               </div>
@@ -35,7 +35,7 @@
                           Account balance
                       </p>
                       <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                          $ 46,760.89
+                          PKR {{$totalAmount}}
                       </p>
                   </div>
               </div>
@@ -49,10 +49,10 @@
                   </div>
                   <div>
                       <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                          New sales
+                          New Members
                       </p>
                       <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                          376
+                          {{ $newMembers }}
                       </p>
                   </div>
               </div>
@@ -65,18 +65,16 @@
                   </div>
                   <div>
                       <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                          Pending contacts
+                          Pending Fee's
                       </p>
                       <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                          35
+                          {{ $pendingDues }}
                       </p>
                   </div>
               </div>
           </div>
-  --}}
         <!-- New Table -->
         <livewire:users.members />
-        {{--
                 <!-- Charts -->
                 <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
                     Charts
@@ -120,7 +118,7 @@
                             </div>
                         </div>
                     </div>
-                </div>--}}
+                </div>
     </div>
 
 </x-app-layout>

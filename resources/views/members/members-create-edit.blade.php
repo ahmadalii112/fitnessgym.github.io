@@ -3,18 +3,55 @@
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
             Add Members
         </h2>
-        <x-validation-errors class="mb-4" />
+
+        <!-- Fee -->
+        <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
+            Fee
+        </h4>
         <form method="POST" action="{{ isset($user) ? route('members.update', $user->id) : route('members.store') }}"
               class="">
             @csrf
             @isset($user) @method('PUT') @endisset
-            <div
-                class="grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-5 pt-8 bg-white rounded-xl p-4 shadow-sm dark:bg-gray-800 dark:text-red-600">
+        <div class="grid grid-cols-1 mb-8 lg:grid-cols-2 sm:grid-cols-2 gap-5 pt-8 bg-white rounded-xl p-4 shadow-sm dark:bg-gray-800 dark:text-red-600">
+            <!-- Admission Fee-->
+            <x-input.group label="Admission Fee" for="admission_fee" :error="$errors->first('admission_fee')">
+                <x-input.text id="admission_fee" name="admission_fee" type="number"
+                              value="{{ old('admission_fee', isset($user->feeStructure) ? $user->feeStructure->admission_fee : '' ) }}"
+                              placeholder="Enter Admission fee">
+                    <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
+                </x-input.text>
+                <x-input-error for="admission_fee" class="mt-1 text-xs text-red-600 dark:text-red-400"/>
+
+            </x-input.group>
+
+            <x-input.group label="Monthly Fee" for="monthly_fee" :error="$errors->first('monthly_fee')">
+                <x-input.text id="monthly_fee" name="monthly_fee" type="number"
+                              value="{{ old('monthly_fee', isset($user->feeStructure) ? $user->feeStructure->monthly_fee : '' ) }}"
+                              placeholder="Enter Monthly fee">
+                    <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
+                </x-input.text>
+                <x-input-error for="monthly_fee" class="mt-1 text-xs text-red-600 dark:text-red-400"/>
+
+            </x-input.group>
+        </div>
+        <!-- Basic Information -->
+        <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Basic Information</h4>
+{{--        <x-validation-errors class="mb-4" />--}}
+
+            <div class="grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-2 gap-5 pt-8 bg-white rounded-xl p-4 shadow-sm dark:bg-gray-800 dark:text-red-600">
                 <!-- FirstName-->
                 <x-input.group label="Firstname" for="firstname" :error="$errors->first('firstname')">
                     <x-input.text id="firstname" name="firstname"
                                   value="{{ old('firstname', isset($user) ? $user->firstname : '' ) }}"
-                                  placeholder="Muhammad">
+                                  placeholder="Enter firstname">
                         <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                  stroke="currentColor" stroke-width="2">
@@ -31,7 +68,7 @@
                 <x-input.group label="Middlename" for="middlename" :error="$errors->first('middlename')">
                     <x-input.text id="middlename" name="middlename"
                                   value="{{ old('middlename', isset($user) ? $user->middlename : '' ) }}"
-                                  placeholder="Ahmad">
+                                  placeholder="Enter middlename">
                         <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                  stroke="currentColor" stroke-width="2">
@@ -44,7 +81,7 @@
                 <!-- Lastname-->
                 <x-input.group label="Lastname" for="lastname" :error="$errors->first('lastname')">
                     <x-input.text id="lastname" name="lastname"
-                                  value="{{ old('lastname', isset($user) ? $user->lastname : '' ) }}" placeholder="Ali">
+                                  value="{{ old('lastname', isset($user) ? $user->lastname : '' ) }}" placeholder="Enter lastname">
                         <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                  stroke="currentColor" stroke-width="2">
@@ -60,7 +97,7 @@
                 <!-- Email-->
                 <x-input.group label="Email" for="email" :error="$errors->first('email')">
                     <x-input.text id="email" name="email" value="{{ old('email', isset($user) ? $user->email : '' ) }}"
-                                  placeholder="name@mail.com">
+                                  placeholder="Enter email">
                         <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                  stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -85,6 +122,7 @@
                             </svg>
                         </div>
                     </x-input.date>
+                    <span class="text-xs text-gray-600 dark:text-gray-400">Date format : YYYY-MM-DD.</span>
                     <x-input-error for="date_of_birth" class="mt-1 text-xs text-red-600 dark:text-red-400"/>
                 </x-input.group>
                 <!-- Gender-->
@@ -110,7 +148,7 @@
                 <x-input.group label="CNIC" for="cnic" :error="$errors->first('cnic')">
                     <x-input.text id="cnic" type="text" name="cnic" placeholder="XXXXX-XXXXXXX-X"
                                   value="{{old('cnic', isset($user) ? $user->cnic : '' )}}"
-                                  pattern="[0-9]{5}-[0-9]{7}-[0-9]{1}" title="XXXXX-XXXXXXX-X">
+                                  pattern="[0-9]{5}-[0-9]{7}-[0-9]{1}"  title="Please Enter CNIC in this format XXXXX-XXXXXXX-X" >
                         <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                  stroke="currentColor" stroke-width="2">
@@ -125,7 +163,7 @@
                 <x-input.group label="Phone Number" for="phone" :error="$errors->first('phone')">
                     <x-input.text id="phone" type="tel" name="phone"
                                   value="{{ old('phone', isset($user) ? $user->phone : '' ) }}"
-                                  placeholder="+92********">
+                                  placeholder="Enter phone number">
                         <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                  stroke="currentColor" stroke-width="2">
@@ -134,13 +172,14 @@
                             </svg>
                         </div>
                     </x-input.text>
+                    <span class="text-xs text-gray-600 dark:text-gray-400">Phone format : +92346XXXXX.</span>
                     <x-input-error for="phone" class="mt-1 text-xs text-red-600 dark:text-red-400"/>
                 </x-input.group>
                 <!-- Mobile Number-->
                 <x-input.group label="Mobile Number" for="mobile" :error="$errors->first('mobile')">
                     <x-input.text id="mobile" type="tel" name="mobile"
                                   value="{{ old('mobile', isset($user) ? $user->mobile : '' ) }}"
-                                  placeholder="+92********">
+                                  placeholder="Enter mobile number">
                         <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                  stroke="currentColor" stroke-width="2">
@@ -156,7 +195,7 @@
                 <x-input.group label="Weight (KG)" for="weight" :error="$errors->first('weight')">
                     <x-input.text name="weight" type="number"
                                   value="{{ old('weight', isset($user) ? $user->weight : '' ) }}" id="inputKilograms"
-                                  placeholder="Kilograms"
+                                  placeholder="77"
                                   oninput="weightConverter(this.value)" onchange="weightConverter(this.value)">
                         <button type="button"
                                 class="absolute inset-y-0 right-0 px-4 text-xs font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
@@ -166,45 +205,39 @@
                     <x-input-error for="weight" class="mt-1 text-xs text-red-600 dark:text-red-400"/>
                 </x-input.group>
                 <!-- Height-->
-
-                <x-input.group label="Height" for="height" :error="$errors->first('height')">
-                    <div class="flex justify-between">
-                        <div class="mr-3">
+                <x-input.group label="Height (Feet)" for="height" :error="$errors->first('height')">
                             <x-input.text name="feet" type="number" id="feet"
-                                          value="{{ old('feet', isset($user) ? $user->full_height[0] : '' ) }}"
-                                          placeholder="Ft">
+                                          value="{{ old('feet', isset($height) ? $height[0] : '' ) }}"
+                                          placeholder="5">
                                 <button type="button"
                                         class="absolute inset-y-0 right-0 px-4 text-xs font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                    Ft
+                                    Feet
                                 </button>
                             </x-input.text>
-
-                        </div>
-                        <div class="mr-3">
+                </x-input.group>
+                <x-input.group label="Height (Inches)" for="height" :error="$errors->first('height')">
                             <x-input.text name="inches" type="number" id="inches"
-                                          value="{{ old('inches', isset($user) ? $user->full_height[1] : '' ) }} "
-                                          placeholder="In">
-                                <button type="button"
-                                        class="absolute inset-y-0 right-0 px-4 text-xs font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                    In.
-                                </button>
-                            </x-input.text>
-                        </div>
-                    </div>
+                                             value="{{ old('inches', isset($height) ? $height[1] : ''  ) }} "
+                                             placeholder="5">
+                        <button type="button"
+                                class="absolute inset-y-0 right-0 px-4 text-xs font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                            Inches
+                        </button>
+                    </x-input.text>
                 </x-input.group>
-
-
             </div>
-            <hr>
-            <div class="bg-white rounded-xl p-4 shadow-sm dark:bg-gray-700">
+            <div class="bg-white rounded-xl p-4 shadow-sm dark:bg-gray-800 mb-8">
                 <x-input.group label="Address" for="address" :error="$errors->first('address')">
-                        <textarea name="address" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" rows="3" placeholder="Enter some long form content.">@isset($user) {{ $user->address }} @endisset</textarea>
-
+                        <textarea name="address" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" rows="3" placeholder="Enter address">@isset($user) {{ $user->address }} @endisset</textarea>
                 </x-input.group>
+               <div class="mt-4">
+                   <button  class='px-10 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-600 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-green'>
+                       Save
+                   </button>
+               </div>
             </div>
-            <x-button>
-                {{ __('Save') }}
-            </x-button>
+
+
         </form>
     </div>
     @push('style')

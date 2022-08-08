@@ -18,7 +18,7 @@ Route::view('/', 'homepage');
 Route::view('/about', 'homepage1');
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
-    Route::view('dashboard', 'dashboard')->name('dashboard');
+    Route::get('dashboard', [UserController::class, 'dashboard'])->name('dashboard');
     Route::resource('members', UserController::class);
     Route::view('forms', 'forms')->name('forms');
     Route::view('cards', 'cards')->name('cards');

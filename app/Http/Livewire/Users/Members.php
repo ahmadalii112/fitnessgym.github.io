@@ -16,6 +16,7 @@ class Members extends Component
     public $sorDirection = 'desc';
     protected $queryString = ['sortField', 'sorDirection'];
     public $confirmingUserDeletion = false;
+    public $full_name = '';
 
     public function sortBy($field)
     {
@@ -31,14 +32,16 @@ class Members extends Component
     {
         return view('livewire.users.members', [
             'users' => User::query()
+                ->with('feeStructure')
                 ->search('search', $this->search)
                 ->where('id', '!=' ,auth()->id())
                 ->orderBy($this->sortField, $this->sorDirection)->paginate($this->perPage),
         ]);
     }
 
-    public function confirmUserDeletion( $id){
+    public function confirmUserDeletion($id){
         $this->confirmingUserDeletion = $id;
+        $this->full_name = User::find($id)->full_name;
     }
     public function deleteUser($user){
         User::whereId($user)->delete();

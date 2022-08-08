@@ -77,12 +77,11 @@ class User extends Authenticatable
         return $this->firstname ." ". $this->middlename ." ". $this->lastname;
     }
 
-    public function getStatusColorAttribute()
+
+    public function feeStructure(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return [
-                'process' => 'indigo',
-                'paid' => 'green',
-                'unpaid' => 'red',
-            ][$this->status] ?? 'cool-gray';
+        return $this->hasOne(FeeStructure::class);
     }
+
+
 }

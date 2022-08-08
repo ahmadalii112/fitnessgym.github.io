@@ -3,11 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MemberRequest;
+use App\Models\FeeStructure;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+    public $newMembers, $pendingDues = 0;
+    public function dashboard()
+    {
+        $totalMembers = User::where('id', '!=' ,auth()->id())->count();
+        $totalAmount = FeeStructure::select(DB::raw('sum(monthly_fee + admission_fee) as total'))->value('total') ?? 0;
+        $currentYearMonth = now()->format('Y-m');
+        if (FeeStructure::get()->isNotEmpty()) {
+            $this->newMembers = FeeStructure::where('admission_date', 'Like', '%' . $currentYearMonth. '%')->count();
+            $this->pendingDues = FeeStructure::whereRaw('issue_fee_date > due_fee_date')->count();
+        }
+        return view('dashboard', compact('totalMembers', 'totalAmount'))
+            ->with('newMembers', $this->newMembers)
+            ->with('pendingDues', $this->pendingDues);
+    }
 
     public function index()
     {
@@ -24,7 +41,19 @@ class UserController extends Controller
     public function store(MemberRequest $request)
     {
         # dd(array_merge($request->validated(), ['height' => $request->feet]));
-        $user = User::create($request->validated() + [ 'height' => $request->feet . " " .$request->inches ]);
+        $user = User::create($request->validated() + ['height' => $request->feet . " " . $request->inches]);
+        // Todo: Gym fee
+        $currentDate = now()->format('Y-m-d');
+        $currentMonthDate = Carbon::parse($currentDate);
+        $nextMonthDate = $currentMonthDate->addMonth()->format('Y-m-d');
+        $user->feeStructure()->create([
+            'admission_fee' => $request->admission_fee ?? 0,
+            'monthly_fee' => $request->monthly_fee,
+            'admission_date' => $currentDate,
+            'issue_fee_date' => $currentDate,
+            'due_fee_date' => $nextMonthDate,
+            'status' => 'Paid',
+        ]);
         return redirect(route('members.index'))->with('message', 'Member Added Successfully');
     }
 
@@ -37,14 +66,15 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $user = User::where('id', '!=', auth()->id())->find($id);
-        return view('members.members-create-edit', compact('user'));
+        $user = User::where('id', '!=', auth()->id())->findOrFail($id);
+        $height = !empty($user->height) ? $user->full_height : null;
+        return view('members.members-create-edit', compact('user', 'height'));
     }
 
 
     public function update(MemberRequest $request, User $member)
     {
-        $member->update($request->validated() + [ 'height' => $request->feet . " " .$request->inches ]);
+        $member->update($request->validated() + ['height' => $request->feet . " " . $request->inches]);
         return redirect(route('members.index'))->with('message', 'Member Updated Successfully');
     }
 
