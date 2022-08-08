@@ -5,7 +5,7 @@ if (!function_exists('feeDueDateStatus')) {
     function feeDueDateStatus($user): ?int
     {
         return $data = (!is_null($user->feeStructure))
-            ? now()->addDays(120)->diffInDays($user->feeStructure->due_fee_date, false)
+            ? now()->diffInDays($user->feeStructure->due_fee_date, false)
             : null ;
     }
 }
