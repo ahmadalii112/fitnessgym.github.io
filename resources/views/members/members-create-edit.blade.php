@@ -23,12 +23,9 @@
                                 class="block w-full pr-10 mt-1 text-sm text-black @isset($user) bg-gray-100 @endisset dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                                 placeholder="Enter Gym ID Number"/>
                             <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">
-                                <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                     stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path
-                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
-                                    </path>
-                                </svg>
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
                             </div>
                         </div>
                     <x-input-error for="gym_id" class="mt-1 text-xs text-red-600 dark:text-red-400"/>
@@ -178,7 +175,8 @@
                 <x-input.group label="CNIC" for="cnic" :error="$errors->first('cnic')">
                     <x-input.text id="cnic" type="text" name="cnic" placeholder="XXXXX-XXXXXXX-X"
                                   value="{{old('cnic', isset($user) ? $user->cnic : '' )}}"
-                                  pattern="[0-9]{5}-[0-9]{7}-[0-9]{1}"  title="Please Enter CNIC in this format XXXXX-XXXXXXX-X" >
+                                  {{--pattern="[0-9]{5}-[0-9]{7}-[0-9]{1}"--}}
+                                  title="Please Enter CNIC in this format XXXXX-XXXXXXX-X" >
                         <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                  stroke="currentColor" stroke-width="2">

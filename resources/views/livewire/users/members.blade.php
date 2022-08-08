@@ -159,7 +159,7 @@
             </x-table.row>
           @empty
             <x-table.row>
-              <x-table.cell colspan="5">
+              <x-table.cell colspan="6">
                 <div class="flex justify-center items-center space-x-2">
 
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cool-gray-400"
@@ -197,10 +197,10 @@
       </div>
 
       <div class="my-3">
-        <p class="text-sm text-gray-500 text-center ">Do you really want to delete <span
+        <p class="text-sm text-gray-500 text-center ">Please Enter the PKR rupees and collect money from <span
             class="font-semibold"> {{ $full_name ?? 'User' }}</span> ?
         </p>
-        <p class="text-sm text-gray-500 text-center">This process cannot be undone</p>
+        <p class="text-sm text-red-600 text-center"> <span class="font-bold">Note: </span>This process cannot be undone</p>
         <x-input.text wire:model="monthly_fee" id="monthly_fee" name="monthly_fee" type="number"
                       placeholder="Enter Monthly fee">
           <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">

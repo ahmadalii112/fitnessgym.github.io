@@ -15,11 +15,13 @@ class DashboardController extends Controller
     $totalMembers = User::where('id', '!=' ,auth()->id())->count();
     $totalAmount = FeeStructure::select(DB::raw('sum(total_fee_by_user + admission_fee) as total'))->value('total') ?? 0;
     $currentYearMonth = now()->format('Y-m');
+    $FeePendingMembers = FeeStructure::with('user')->where('due_fee_date', '<=', dateForHumans());
     if (FeeStructure::get()->isNotEmpty()) {
       $this->newMembers = FeeStructure::where('admission_date', 'Like', '%' . $currentYearMonth. '%')->count();
-      $this->pendingDues = FeeStructure::where('due_fee_date', '<=', dateForHumans())->count();
+      $this->pendingDues = $FeePendingMembers->count();
     }
-    return view('dashboard', compact('totalMembers', 'totalAmount'))
+    $unPaidMembers = $FeePendingMembers->get();
+    return view('dashboard', compact('totalMembers', 'totalAmount', 'unPaidMembers'))
       ->with('newMembers', $this->newMembers)
       ->with('pendingDues', $this->pendingDues);
   }
