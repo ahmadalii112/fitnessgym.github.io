@@ -78,7 +78,6 @@ class Members extends Component
       'status' => 'Paid',
     ]);
     $this->confirmingUserFee = false;
-    return $this->redirect('dashboard');
   }
 
 }
