@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    public $newMembers, $pendingDues = 0;
+    public $newMembers = 0, $pendingDues = 0;
     public function dashboard()
     {
         $totalMembers = User::where('id', '!=' ,auth()->id())->count();
@@ -19,7 +19,7 @@ class UserController extends Controller
         $currentYearMonth = now()->format('Y-m');
         if (FeeStructure::get()->isNotEmpty()) {
             $this->newMembers = FeeStructure::where('admission_date', 'Like', '%' . $currentYearMonth. '%')->count();
-            $this->pendingDues = FeeStructure::whereRaw('issue_fee_date > due_fee_date')->count();
+            $this->pendingDues = FeeStructure::whereRaw('issue_fee_date >= due_fee_date')->count();
         }
         return view('dashboard', compact('totalMembers', 'totalAmount'))
             ->with('newMembers', $this->newMembers)
@@ -66,7 +66,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $user = User::where('id', '!=', auth()->id())->findOrFail($id);
+        $user = User::where('id', '!=', auth()->id())->whereGymId($id)->firstOrFail();
         $height = !empty($user->height) ? $user->full_height : null;
         return view('members.members-create-edit', compact('user', 'height'));
     }

@@ -1,18 +1,48 @@
 <x-app-layout title="Add Members">
     <div class="container grid px-6 mx-auto">
-        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            Add Members
-        </h2>
+            <form method="POST" action="{{ isset($user) ? route('members.update', $user->id) : route('members.store') }}" class="">
+                <div class="flex justify-between">
 
-        <!-- Fee -->
-        <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
-            Fee
-        </h4>
-        <form method="POST" action="{{ isset($user) ? route('members.update', $user->id) : route('members.store') }}"
-              class="">
-            @csrf
-            @isset($user) @method('PUT') @endisset
-        <div class="grid grid-cols-1 mb-8 lg:grid-cols-2 sm:grid-cols-2 gap-5 pt-8 bg-white rounded-xl p-4 shadow-sm dark:bg-gray-800 dark:text-red-600">
+                    <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                        Add Members
+                    </h2>
+                    @csrf
+                    @isset($user)
+                        @method('PUT')
+                    @endisset
+                    <label class="block mt-4 text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">Gym ID</span>
+                        <!-- focus-within sets the color for the icon when input is focused -->
+                        <div
+                            class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
+                            <input
+                                name="gym_id"
+                                type="number"
+                                {{ isset($user) ? 'disabled' : 'type="number"' }}
+                                value="{{ old('gym_id', isset($user) ? $user->gym_id : '' ) }}"
+                                class="block w-full pr-10 mt-1 text-sm text-black @isset($user) bg-gray-100 @endisset dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                placeholder="Enter Gym ID Number"/>
+                            <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">
+                                <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                     stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path
+                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    <x-input-error for="gym_id" class="mt-1 text-xs text-red-600 dark:text-red-400"/>
+                    </label>
+
+
+
+                </div>
+                <!-- Fee -->
+                <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
+                    Fee
+                </h4>
+
+                <div class="grid grid-cols-1 mb-8 lg:grid-cols-2 sm:grid-cols-2 gap-5 pt-8 bg-white rounded-xl p-4 shadow-sm dark:bg-gray-800 dark:text-red-600">
             <!-- Admission Fee-->
             <x-input.group label="Admission Fee" for="admission_fee" :error="$errors->first('admission_fee')">
                 <x-input.text id="admission_fee" name="admission_fee" type="number"

@@ -14,7 +14,7 @@ class ChangeUsersTableColumns extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('roll_number')->nullable()->after('id')->unique();
+            $table->string('gym_id')->nullable()->after('id')->unique();
             $table->string('password')->nullable()->change();
             $table->renameColumn('name','firstname');
             $table->string('middlename')->nullable()->after('name');
@@ -50,6 +50,7 @@ class ChangeUsersTableColumns extends Migration
             $table->dropColumn('gender');
             $table->dropColumn('weight');
             $table->dropColumn('height');
+            $table->dropColumn('gym_id');
             $table->dropSoftDeletes();
         });
     }

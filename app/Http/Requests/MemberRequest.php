@@ -24,7 +24,9 @@ class MemberRequest extends FormRequest
      */
     public function rules()
     {
+        $gym_id = request()->isMethod('Post')  ? 'required|unique:users,gym_id' : 'nullable';
         return [
+            'gym_id' => $gym_id,
             'firstname' => ['required', 'regex:/^[a-zA-Z ]+$/'],
             'middlename' => ['nullable', 'regex:/^[a-zA-Z ]+$/'],
             'lastname' => ['required', 'regex:/^[a-zA-Z ]+$/'],
