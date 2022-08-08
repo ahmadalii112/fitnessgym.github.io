@@ -12,6 +12,6 @@ if (!function_exists('feeDueDateStatus')) {
 if (!function_exists('dateForHumans')) {
     function dateForHumans(): string
     {
-        return now()->addDays(120)->format('Y-m-d');
+        return now()->format('Y-m-d');
     }
 }
