@@ -1,4 +1,4 @@
-<div class=" overflow-x-auto space-y-4">
+<div class="space-y-4">
   <div class="flex justify-between">
     <div class="w-1/4">
       <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
