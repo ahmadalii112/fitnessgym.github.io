@@ -16,7 +16,7 @@ class CreateFeeStructuresTable extends Migration
         Schema::create('fee_structures', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string('admission_fee')->nullable()->comment('1 Time Only');
+            $table->string('admission_fee')->default(0)->nullable()->comment('1 Time Only');
             $table->string('total_fee_by_user')->nullable()->comment('Total fee by this user');
             $table->string('monthly_fee')->nullable();
             $table->date('admission_date')->nullable();

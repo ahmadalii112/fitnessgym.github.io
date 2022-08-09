@@ -65,9 +65,9 @@
                     <span
 
                       class="px-2 py-1 text-xs font-semibold leading-tight  rounded-full
-                    text-{{ ($user->feeStructure->status = 'Paid' &&  feeDueDateStatus($user)) ? 'green' : 'red' }}-700
-                    bg-{{ ($user->feeStructure->status = 'Paid' &&  feeDueDateStatus($user)) ? 'green' : 'red' }}-100
-                    dark:text-white dark:bg-{{ ($user->feeStructure->status = 'Paid' &&  feeDueDateStatus($user))  ? 'green' : 'red' }}-600">
+                    text-{{ ($user->feeStructure->status = 'Paid' &&  (feeDueDateStatus($user) > 0)) ? 'green' : 'red' }}-700
+                    bg-{{ ($user->feeStructure->status = 'Paid' &&  (feeDueDateStatus($user) > 0)) ? 'green' : 'red' }}-100
+                    dark:text-white dark:bg-{{ ($user->feeStructure->status = 'Paid' &&  (feeDueDateStatus($user) > 0))  ? 'green' : 'red' }}-600">
                     @if( feeDueDateStatus($user) > 0 && $user->feeStructure->status = 'Paid')
                         Paid
                       @else

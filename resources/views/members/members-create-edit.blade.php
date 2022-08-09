@@ -235,7 +235,7 @@
                 <!-- Height-->
                 <x-input.group label="Height (Feet)" for="height" :error="$errors->first('height')">
                             <x-input.text name="feet" type="number" id="feet"
-                                          value="{{ old('feet', isset($height) ? $height[0] : '' ) }}"
+                                          value="{{ old('feet', isset($height[0]) ? $height[0] : '' ) }}"
                                           placeholder="5">
                                 <button type="button"
                                         class="absolute inset-y-0 right-0 px-4 text-xs font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
@@ -245,7 +245,7 @@
                 </x-input.group>
                 <x-input.group label="Height (Inches)" for="height" :error="$errors->first('height')">
                             <x-input.text name="inches" type="number" id="inches"
-                                             value="{{ old('inches', isset($height) ? $height[1] : ''  ) }} "
+                                             value="{{ old('inches', isset($height[1]) ? $height[1] : ''  ) }} "
                                              placeholder="5">
                         <button type="button"
                                 class="absolute inset-y-0 right-0 px-4 text-xs font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
