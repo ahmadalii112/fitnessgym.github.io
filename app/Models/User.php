@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -65,6 +66,16 @@ class User extends Authenticatable
     public function setHeightAttribute($value)
     {
         $this->attributes['height'] = $value;
+    }
+
+    public function setDateOfBirthAttribute($value)
+    {
+        $this->attributes['date_of_birth'] = Carbon::createFromFormat('d-m-Y', $value)->format('Y-m-d');
+    }
+
+    public function getDateOfBirthFormatAttribute()
+    {
+        return Carbon::parse($this->date_of_birth)->format('d-m-Y');
     }
 
     public function getFullHeightAttribute()

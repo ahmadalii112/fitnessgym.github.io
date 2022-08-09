@@ -61,6 +61,10 @@ class UserController extends Controller
     public function update(MemberRequest $request, User $member)
     {
         $member->update($request->validated() + ['height' => $request->feet . " " . $request->inches]);
+        $member->feeStructure()->update([
+          'admission_fee' => $request->admission_fee ?? 0,
+          'monthly_fee' => $request->monthly_fee,
+        ]);
         return redirect(route('members.index'))->with('message', 'Member Updated Successfully');
     }
 

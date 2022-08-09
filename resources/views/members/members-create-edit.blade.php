@@ -140,7 +140,7 @@
                 <!-- DOB-->
                 <x-input.group label="DOB" for="date_of_birth" :error="$errors->first('date_of_birth')">
                     <x-input.date name="date_of_birth"
-                                  value="{{ old('date_of_birth', isset($user) ? $user->date_of_birth : '' ) }}">
+                                  value="{{ old('date_of_birth', isset($user) ? $user->date_of_birth_format : '' ) }}">
                         <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                  stroke="currentColor" stroke-width="2">
@@ -149,7 +149,7 @@
                             </svg>
                         </div>
                     </x-input.date>
-                    <span class="text-xs text-gray-600 dark:text-gray-400">Date format : YYYY-MM-DD.</span>
+                    <span class="text-xs text-gray-600 dark:text-gray-400">Date format : DD-MM-YYYY.</span>
                     <x-input-error for="date_of_birth" class="mt-1 text-xs text-red-600 dark:text-red-400"/>
                 </x-input.group>
                 <!-- Gender-->
