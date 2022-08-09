@@ -81,6 +81,7 @@
       <x-table>
         <x-slot name="head">
           <x-table.heading>Name</x-table.heading>
+          <x-table.heading>Last Fee Date</x-table.heading>
           <x-table.heading>Status</x-table.heading>
         </x-slot>
         <x-slot name="body">
@@ -102,6 +103,7 @@
             </div>
               </x-table.cell>
 
+            <x-table.cell>{{ \Carbon\Carbon::parse($member->issue_fee_date)->format('M d, Y') }}</x-table.cell>
             <x-table.cell>
                   <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
                       Fee Pending
