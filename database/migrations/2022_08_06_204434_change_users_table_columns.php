@@ -15,6 +15,7 @@ class ChangeUsersTableColumns extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('gym_id')->nullable()->after('id')->unique();
+            $table->string('email')->nullable()->change();
             $table->string('password')->nullable()->change();
             $table->renameColumn('name','firstname');
             $table->string('middlename')->nullable()->after('name');

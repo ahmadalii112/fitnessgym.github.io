@@ -29,7 +29,8 @@ class AppServiceProvider extends ServiceProvider
 //                ? $this->where($field, 'like', "%{$string}%")
                 ? $this->where(function ($user) use ($string) {
                     $user
-                        ->where('firstname', 'LIKE', "%{$string}%")
+                        ->where('gym_id', '=', $string)
+                        ->OrWhere('firstname', 'LIKE', "%{$string}%")
                         ->orWhere('lastname', 'LIKE', "%{$string}%")
                         ->orWhere('middlename', 'LIKE', "%{$string}%")
                         ->orWhere('email', 'LIKE', "%{$string}%");

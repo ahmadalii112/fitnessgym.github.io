@@ -13,7 +13,6 @@
         </div>
       </div>
     </div>
-    @if(request()->routeIs('members.index'))
       <a href="{{ route('members.create')  }}">
         <x-button class="px-4 py-2 text-sm font-medium">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -23,12 +22,14 @@
           </svg>
         </x-button>
       </a>
-    @endif
   </div>
   <div class="w-full overflow-hidden rounded-lg shadow-xs">
     <div class="w-full">
       <x-table>
         <x-slot name="head">
+          <x-table.heading sortable wire:click="sortBy('gym_id')"
+                           :direction="$sortField === 'gym_id' ? $sorDirection : null ">Gym ID
+          </x-table.heading>
           <x-table.heading sortable wire:click="sortBy('firstname')"
                            :direction="$sortField === 'firstname' ? $sorDirection : null ">Name
           </x-table.heading>
@@ -50,6 +51,7 @@
         <x-slot name="body">
           @forelse($users as $user)
             <x-table.row wire:loading.class.delay="opacity-50">
+              <x-table.cell>{{ $user->gym_id }}</x-table.cell>
               <x-table.cell>
                 <div class="flex items-center text-sm">
                   <!-- Avatar with inset shadow -->
@@ -91,7 +93,7 @@
                 </div>
               </x-table.cell>
               <x-table.cell>
-                {{$user->created_at->format('M d, Y')}}
+                {{ \Carbon\Carbon::parse($user->feeStructure->admission_date)->format('M d, Y')}}
               </x-table.cell>
 
               <x-table.cell>

@@ -29,15 +29,15 @@ class MemberRequest extends FormRequest
       'gym_id' => $gym_id,
       'firstname' => ['required', 'regex:/^[a-zA-Z ]+$/'],
       'middlename' => ['nullable', 'regex:/^[a-zA-Z ]+$/'],
-      'lastname' => ['required', 'regex:/^[a-zA-Z ]+$/'],
-      'date_of_birth' => 'required|date|date_format:d-m-Y|before:' . now(),
-      'cnic' => ['required', 'min:13'],
+      'lastname' => ['sometimes','nullable', 'regex:/^[a-zA-Z ]+$/'],
+      'date_of_birth' => 'sometimes|nullable|date|date_format:d-m-Y|before:' . now(),
+      'cnic' => ['sometimes','nullable','min:13'],
       'address' => ['nullable', 'max:300'],
       'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'max:18'],
       'mobile' => ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'max:18'],
       'gender' => ['required', 'not_in:0'],
-      'weight' => ['required'],
-      'email' => 'required|email|unique:users,email,' . optional($this->member)->id
+      'weight' => ['nullable'],
+      'email' => 'sometimes|nullable|email|unique:users,email,' . optional($this->member)->id
     ];
   }
 
