@@ -80,6 +80,7 @@
       <!-- Card -->
       <x-table>
         <x-slot name="head">
+          <x-table.heading>Gym ID</x-table.heading>
           <x-table.heading>Name</x-table.heading>
           <x-table.heading>Last Fee Date</x-table.heading>
           <x-table.heading>Status</x-table.heading>
@@ -87,6 +88,7 @@
         <x-slot name="body">
           @forelse($unPaidMembers as $member)
           <x-table.row>
+            <x-table.cell>{{$member->user->gym_id}}</x-table.cell>
             <x-table.cell>
             <div class="flex items-center text-sm">
               <!-- Avatar with inset shadow -->
@@ -112,7 +114,7 @@
           </x-table.row>
             @empty
               <x-table.row>
-                <x-table.cell colspan="2">
+                <x-table.cell colspan="4">
                   <div class="flex justify-center items-center space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cool-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />

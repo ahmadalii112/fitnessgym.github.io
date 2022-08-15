@@ -36,9 +36,9 @@
 
         <!-- Name -->
         <div class="col-span-6 sm:col-span-4">
-            <x-label for="name" value="Name" />
-            <x-input id="name" type="text" class="block w-full mt-1" wire:model.defer="state.name" autocomplete="name" />
-            <x-input-error for="name" class="mt-2" />
+            <x-label for="firstname" value="firstname" />
+            <x-input id="firstname" type="text" class="block w-full mt-1" wire:model.defer="state.firstname" autocomplete="firstname" />
+            <x-input-error for="firstname" class="mt-2" />
         </div>
 
         <!-- Email -->
