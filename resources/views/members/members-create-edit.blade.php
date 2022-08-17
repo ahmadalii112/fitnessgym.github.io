@@ -154,7 +154,7 @@
                 <!-- DOB-->
                 <x-input.group label="DOB" for="date_of_birth" :error="$errors->first('date_of_birth')">
                     <x-input.date name="date_of_birth"
-                                  value="{{ old('date_of_birth', isset($user) ? $user->date_of_birth_format : '' ) }}">
+                                  value="{{ old('date_of_birth', isset($user) ? $user->date_of_birth_format : '' ) }}" required>
                         <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                  stroke="currentColor" stroke-width="2">

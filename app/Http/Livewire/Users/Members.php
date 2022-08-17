@@ -20,6 +20,7 @@ class Members extends Component
   public $confirmingUserDeletion = false;
   public $confirmingUserFee = false;
   public $full_name = '';
+  public $feeDetails;
   public $monthly_fee = '3000';
   public $issue_date;
 
@@ -75,6 +76,7 @@ class Members extends Component
   {
     $this->confirmingUserFee = $id;
     $this->full_name = User::find($id)->full_name;
+    $this->feeDetails = FeeStructure::whereUserId($id)->first();
   }
 
   public function feePayUser($user)

@@ -187,7 +187,9 @@
         <p class="text-sm text-gray-500 text-center ">Please Enter the PKR rupees and collect money from <span
             class="font-semibold"> {{ $full_name ?? 'User' }}</span> ?
         </p>
-        <p class="text-sm text-red-600 text-center"> <span class="font-bold">Note: </span>This process cannot be undone</p>
+        <p class="text-sm text-red-600 text-center mb-3"> <span class="font-bold">Note: </span>This process cannot be undone</p>
+       <p class="text-sm text-center italic"> <span class="font-semibold">Last Fee Issue Date: </span> {{ \Carbon\Carbon::parse($feeDetails->issue_fee_date ?? '')->format('d M Y') }}</p>
+       <p class="text-sm text-center italic"> <span class="font-semibold">Last Fee Due Date: </span> {{ \Carbon\Carbon::parse($feeDetails->due_fee_date ?? '')->format('d M Y') }}</p>
         <x-input.group label="Monthly Fee" for="monthly_fee" :error="$errors->first('monthly_fee')">
         <x-input.text wire:model="monthly_fee" id="monthly_fee" name="monthly_fee" type="number"
                       placeholder="Enter Monthly fee">
@@ -202,7 +204,7 @@
         <x-input-error for="monthly_fee" class="mt-1 text-xs text-red-600 dark:text-red-400"/>
         </x-input.group>
         <!-- Issue Fee Date-->
-        <x-input.group label="Issue Fee Date" for="issue_date" :error="$errors->first('issue_date')">
+        <x-input.group label="New Issue Fee Date" for="issue_date" :error="$errors->first('issue_date')">
           <x-input.date wire:model.lazy="issue_date" name="issue_date" required>
             <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"

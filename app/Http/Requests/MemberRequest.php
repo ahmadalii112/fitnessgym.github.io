@@ -30,7 +30,7 @@ class MemberRequest extends FormRequest
       'firstname' => ['required', 'regex:/^[a-zA-Z ]+$/'],
       'middlename' => ['nullable', 'regex:/^[a-zA-Z ]+$/'],
       'lastname' => ['sometimes','nullable', 'regex:/^[a-zA-Z ]+$/'],
-      'date_of_birth' => 'sometimes|nullable|date|date_format:d-m-Y|before:' . now(),
+      'date_of_birth' => 'required|nullable|date|date_format:d-m-Y|before:' . now(),
       'cnic' => ['sometimes','nullable','min:13'],
       'address' => ['nullable', 'max:300'],
       'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'max:18'],
