@@ -21,6 +21,21 @@ class Members extends Component
   public $confirmingUserFee = false;
   public $full_name = '';
   public $monthly_fee = '3000';
+  public $issue_date;
+
+  protected $rules = [
+    'monthly_fee' => 'required|max:5',
+    'issue_date' => 'required|nullable|date|date_format:d-m-Y',
+  ];
+
+  public function updated($propertyName)
+  {
+    $this->validateOnly($propertyName);
+  }
+  public function mount()
+  {
+    $this->issue_date = now()->format('d-m-Y');
+  }
 
   public function sortBy($field)
   {
@@ -64,7 +79,9 @@ class Members extends Component
 
   public function feePayUser($user)
   {
-    $currentDate = dateForHumans();
+    $this->validate();
+    # $currentDate = dateForHumans();
+    $currentDate =  Carbon::parse($this->issue_date)->format('Y-m-d');
     $currentMonthDate = Carbon::parse($currentDate);
     $nextMonthDate = $currentMonthDate->addMonth()->format('Y-m-d');
     $userFee = FeeStructure::whereUserId($user);

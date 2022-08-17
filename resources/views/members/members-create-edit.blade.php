@@ -58,7 +58,7 @@
             <x-input.group label="Monthly Fee" for="monthly_fee" :error="$errors->first('monthly_fee')">
                 <x-input.text id="monthly_fee" name="monthly_fee" type="number"
                               value="{{ old('monthly_fee', isset($user->feeStructure) ? $user->feeStructure->monthly_fee : '' ) }}"
-                              placeholder="Enter Monthly fee">
+                              placeholder="Enter Monthly fee" required>
                     <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -66,7 +66,21 @@
                     </div>
                 </x-input.text>
                 <x-input-error for="monthly_fee" class="mt-1 text-xs text-red-600 dark:text-red-400"/>
-
+            </x-input.group>
+            <!-- Admission Date-->
+            <x-input.group label="Admission Date" for="admission_date" :error="$errors->first('admission_date')">
+              <x-input.date name="admission_date"
+                            value="{{ old('admission_date',  isset($user->feeStructure) ? Carbon\Carbon::parse($user->feeStructure->admission_date)->format('d-m-Y') : '' ) }}" required>
+                <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                       stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                  </svg>
+                </div>
+              </x-input.date>
+              <span class="text-xs text-gray-600 dark:text-gray-400">Date format : DD-MM-YYYY.</span>
+              <x-input-error for="admission_date" class="mt-1 text-xs text-red-600 dark:text-red-400"/>
             </x-input.group>
         </div>
         <!-- Basic Information -->

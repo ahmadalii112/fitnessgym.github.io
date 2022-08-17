@@ -51,21 +51,13 @@
         <x-slot name="body">
           @forelse($users as $user)
             <x-table.row wire:loading.class.delay="opacity-50">
-              <x-table.cell>{{ $user->gym_id }}</x-table.cell>
+              <x-table.cell class="font-semibold text-center">{{ $user->gym_id }}</x-table.cell>
               <x-table.cell>
                 <div class="flex items-center text-sm">
                   <!-- Avatar with inset shadow -->
-                  <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                    <img class="object-cover w-full h-full rounded-full"
-                         src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-                         alt="" loading="lazy"/>
-                    <div class="absolute inset-0 rounded-full shadow-inner"
-                         aria-hidden="true"></div>
-                  </div>
                   <div>
                     <p class="font-semibold mb-1">{{ $user->full_name  }}</p>
                     <span
-
                       class="px-2 py-1 text-xs font-semibold leading-tight  rounded-full
                     text-{{ ($user->feeStructure->status = 'Paid' &&  (feeDueDateStatus($user) > 0)) ? 'green' : 'red' }}-700
                     bg-{{ ($user->feeStructure->status = 'Paid' &&  (feeDueDateStatus($user) > 0)) ? 'green' : 'red' }}-100
@@ -123,13 +115,6 @@
 
               </x-table.cell>
 
-              {{--           <x-table.cell>{{$user->feeStructure->issue_fee_date ?? 'N/A'}}</x-table.cell>
-                         <x-table.cell>
-
-
-                         </x-table.cell>--}}
-
-
               <x-table.cell>
                 <div class="flex items-center space-x-4 text-sm">
                   <a href="{{ route('members.edit', $user->gym_id) }}">
@@ -161,7 +146,7 @@
             </x-table.row>
           @empty
             <x-table.row>
-              <x-table.cell colspan="6">
+              <x-table.cell colspan="7">
                 <div class="flex justify-center items-center space-x-2">
 
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cool-gray-400"
@@ -203,6 +188,7 @@
             class="font-semibold"> {{ $full_name ?? 'User' }}</span> ?
         </p>
         <p class="text-sm text-red-600 text-center"> <span class="font-bold">Note: </span>This process cannot be undone</p>
+        <x-input.group label="Monthly Fee" for="monthly_fee" :error="$errors->first('monthly_fee')">
         <x-input.text wire:model="monthly_fee" id="monthly_fee" name="monthly_fee" type="number"
                       placeholder="Enter Monthly fee">
           <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">
@@ -214,6 +200,21 @@
           </div>
         </x-input.text>
         <x-input-error for="monthly_fee" class="mt-1 text-xs text-red-600 dark:text-red-400"/>
+        </x-input.group>
+        <!-- Issue Fee Date-->
+        <x-input.group label="Issue Fee Date" for="issue_date" :error="$errors->first('issue_date')">
+          <x-input.date wire:model.lazy="issue_date" name="issue_date" required>
+            <div class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                   stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+            </div>
+          </x-input.date>
+          <span class="text-xs text-gray-600 dark:text-gray-400">Date format : DD-MM-YYYY.</span>
+          <x-input-error for="issue_date" class="mt-1 text-xs text-red-600 dark:text-red-400"/>
+        </x-input.group>
 
       </div>
 
@@ -280,3 +281,12 @@
   @endif
   {{-- Modal Ends   --}}
 </div>
+@push('style')
+  <!-- Pikaday CSS-->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+@endpush
+@push('scripts')
+  <!-- Pikaday JS-->
+  <script src="https://unpkg.com/moment"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js" defer></script>
+@endpush
