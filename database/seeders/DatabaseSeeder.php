@@ -16,6 +16,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([AdminSeeder::class]);
-         FeeStructure::factory(5)->create();
+//         FeeStructure::factory(15)->create();
     }
 }
