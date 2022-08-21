@@ -14,7 +14,7 @@ class Members extends Component
 
   public $search = '';
   public $perPage = 15;
-  public $sortField = 'created_at';
+  public $sortField = 'fee_structures.admission_date';
   public $sorDirection = 'desc';
   protected $queryString = ['sortField', 'sorDirection'];
   public $confirmingUserDeletion = false;
@@ -53,8 +53,10 @@ class Members extends Component
     return view('livewire.users.members', [
       'users' => User::query()
         ->with('feeStructure')
+        ->join('fee_structures', 'users.id', '=' ,'fee_structures.user_id')
         ->search('search', $this->search)
-        ->where('id', '!=', auth()->id())
+        ->where('users.id', '!=', auth()->id())
+        ->select(['users.*', 'fee_structures.admission_date'])
         ->orderBy($this->sortField, $this->sorDirection)->paginate($this->perPage),
     ]);
   }

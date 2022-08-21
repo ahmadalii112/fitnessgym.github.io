@@ -39,8 +39,8 @@
           <x-table.heading sortable wire:click="sortBy('phone')"
                            :direction="$sortField === 'phone' ? $sorDirection : null ">Phone
           </x-table.heading>
-          <x-table.heading sortable wire:click="sortBy('created_at')"
-                           :direction="$sortField === 'created_at' ? $sorDirection : null ">Admission Date
+          <x-table.heading sortable wire:click="sortBy('admission_date')"
+                           :direction="$sortField === 'admission_date' ? $sorDirection : null ">Admission Date
           </x-table.heading>
           <x-table.heading>Fee Date</x-table.heading>
           {{--          <x-table.heading>Due Fee</x-table.heading>--}}
