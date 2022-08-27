@@ -14,10 +14,10 @@
     <title>{{env('APP_NAME')}}</title>
 </head>
 
-<body class="text-gray-700 bg-white antialiased dark:bg-gray-800" style="font-family: 'Roboto', sans-serif">
+<body class="text-gray-700 bg-white antialiased dark:bg-black" style="font-family: 'Roboto', sans-serif">
 
 <!--Nav-->
-<nav class="flex items-center justify-between flex-wrap p-6 bg-white shadow-md dark:bg-gray-800">
+<nav class="flex items-center justify-between flex-wrap p-6 bg-white shadow-md dark:bg-black">
 
     <div class="flex items-center flex-shrink-0 text-dark md:text-right mr-6">
         <span class="font-semibold text-xl tracking-tight hover:text-green-800 dark:hover:text-gray-200 dark:text-gray-100"><a href="#">Fitness Time</a></span>
@@ -57,17 +57,30 @@
     </div>
 
 </nav>
-<div class="py-20 bg-cover bg-no-repeat bg-fixed" id="home"
-     style="background-image: url({{asset('img/kyle-johnson-Yi-4X9ZJU6Y-unsplash.jpg')}})">
-    <div class="container m-auto text-center px-6 opacity-100" data-aos="fade-in">
-        <h2 class="text-4xl font-bold mb-2 text-white">Unleash You Beast!</h2>
-        <h3 class="text-2xl mb-8 text-gray-200">You dont Get what you wish for you get what you work for!</h3>
+
+<header aria-hidden="true" class="hidden py-2/12 bg-cover bg-no-repeat bg-fixed dark:block" id="home"
+     style="background-image: url({{asset('img/gym/cover.jpg')}})" data-overlay="9">
+    <div class="container mt-10 m-auto text-center px-6 opacity-100" data-aos="fade-in">
+        <h2 class="text-4xl md:text-6xl font-bold mb-2 text-white uppercase">Unleash The Beast!</h2>
+        <h3 class="text-2xl md:text-4xl mb-8 text-gray-200 uppercase">You don't Get what you wish for you get what you work for!</h3>
         <button
-            class="bg-white font-bold rounded-full py-4 px-8 shadow-lg uppercase tracking-wider hover:border-transparent hover:text-blue-500 hover:bg-gray-800">
+            class="bg-white font-bold rounded-full py-4 px-8 shadow-lg uppercase tracking-wider hover:border-transparent hover:text-blue-500 hover:bg-black">
             Are you Ready ?
         </button>
     </div>
-</div>
+</header>
+{{-- White Mode --}}
+<header  aria-hidden="true" class="py-2/12 bg-cover bg-no-repeat bg-fixed dark:hidden " id="home"
+     style="background-image: url('{{asset('img/gym/traidmil.jpg')}}')" data-overlay="9">
+    <div class="container mt-10 m-auto text-center px-6 opacity-100" data-aos="fade-in">
+        <h2 class="text-4xl md:text-6xl font-bold mb-2 text-black uppercase">Unleash The Beast!</h2>
+        <h3 class="text-2xl md:text-4xl mb-8 text-black uppercase">You don't Get what you wish for you get what you work for!</h3>
+        <button
+            class="bg-white font-bold rounded-full py-4 px-8 shadow-lg uppercase tracking-wider hover:border-transparent hover:text-blue-500 hover:bg-black">
+            Are you Ready ?
+        </button>
+    </div>
+</header>
 
 <!-- Features -->
 <section class="container mx-auto px-6 p-10">
@@ -110,8 +123,8 @@
 
 <hr class="dark:bg-black">
 <!-- Section 5 -->
-<section class="flex items-center justify-center py-20 bg-white min-w-screen dark:bg-gray-800">
-    <div class="px-16 bg-white dark:bg-gray-800">
+<section class="flex items-center justify-center py-20 bg-white min-w-screen dark:bg-black">
+    <div class="px-16 bg-white dark:bg-black">
         <div class="container flex flex-col items-start mx-auto lg:items-center">
             <p class="relative flex items-start justify-start w-full text-lg font-bold tracking-wider text-purple-500 dark:text-purple-500 uppercase lg:justify-center lg:items-center">
                 Meet Our Trainers</p>
@@ -268,7 +281,7 @@
 
 
 <!--Footer-->
-<footer class="bg-gray-100 dark:bg-gray-800" id="about">
+<footer class="bg-gray-100 dark:bg-black" id="about">
     <div class="container mx-auto px-6 pt-10 pb-6">
         <div class="flex justify-between">
             <div>
