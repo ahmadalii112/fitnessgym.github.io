@@ -60,9 +60,8 @@
 <div class="py-20 bg-cover bg-no-repeat bg-fixed" id="home"
      style="background-image: url({{asset('img/kyle-johnson-Yi-4X9ZJU6Y-unsplash.jpg')}})">
     <div class="container m-auto text-center px-6 opacity-100" data-aos="fade-in">
-        <h2 class="text-4xl font-bold mb-2 text-white">Echo Base...I've got something!</h2>
-        <h3 class="text-2xl mb-8 text-gray-200">Not much, but it could be a life form. This is Rouge Two. this is Rouge
-            Two. Captain Solo, so you copy?</h3>
+        <h2 class="text-4xl font-bold mb-2 text-white">Unleash You Beast!</h2>
+        <h3 class="text-2xl mb-8 text-gray-200">You dont Get what you wish for you get what you work for!</h3>
         <button
             class="bg-white font-bold rounded-full py-4 px-8 shadow-lg uppercase tracking-wider hover:border-transparent hover:text-blue-500 hover:bg-gray-800">
             Are you Ready ?
@@ -134,64 +133,64 @@
             <div class="flex flex-wrap">
                 <!-- Card 1 -->
                 <div
-                    class="w-full md:w-4/12 lg:mb-0 mb-12 px-4"
+                    class="w-full md:w-2/4 lg:mb-0 mb-12 px-4"
                     data-aos="flip-right"
                 >
                     <div class="px-6">
                         <img
                             alt="..."
-                            src="https://images.unsplash.com/photo-1597347343908-2937e7dcc560?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                            src="{{ asset('img/gym/trainer1.jpeg') }}"
                             class="shadow-lg rounded max-w-full mx-auto"
                             style="max-width: 350px"
                         />
                         <div class="pt-6 text-center">
-                            <h5 class="text-xl font-bold dark:text-gray-200">Mr Rogers</h5>
+                            <h5 class="text-xl font-bold dark:text-gray-200">Arsalan</h5>
                             <p class="mt-1 text-sm text-gray-500 uppercase font-semibold dark:text-gray-50">
-                                Neighborhood Watchman
+                              Mr. Junior Pakistan 2020
                             </p>
                         </div>
                     </div>
                 </div>
                 <!-- Card 2 -->
                 <div
-                    class="w-full md:w-4/12 lg:mb-0 mb-12 px-4"
+                    class="w-full md:w-2/4 lg:mb-0 mb-12 px-4"
                     data-aos="flip-right"
                 >
                     <div class="px-6">
                         <img
                             alt="..."
-                            src="https://images.unsplash.com/photo-1594381898411-846e7d193883?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                            src="{{ asset('img/gym/trainer3.jpeg') }}"
                             class="shadow-lg rounded max-w-full mx-auto"
                             style="max-width: 350px"
                         />
                         <div class="pt-6 text-center">
-                            <h5 class="text-xl font-bold dark:text-gray-200">Strawberry Shortcake</h5>
+                            <h5 class="text-xl font-bold dark:text-gray-200">Abdur Rehman</h5>
                             <p class="mt-1 text-sm text-gray-500 uppercase font-semibold dark:text-gray-50">
-                                Cupcake Smasher
+                                Mr. Pakistan 2019
                             </p>
                         </div>
                     </div>
                 </div>
                 <!-- Card 3 -->
-                <div
-                    class="w-full md:w-4/12 lg:mb-0 mb-12 px-4"
-                    data-aos="flip-right"
-                >
-                    <div class="px-6">
-                        <img
-                            alt="..."
-                            src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-                            class="shadow-lg rounded max-w-full mx-auto"
-                            style="max-width: 350px"
-                        />
-                        <div class="pt-6 text-center">
-                            <h5 class="text-xl font-bold dark:text-gray-200">Ronald McDonald</h5>
-                            <p class="mt-1 text-sm text-gray-500 uppercase font-semibold dark:text-gray-50">
-                                Double Whoopass With Cheese
-                            </p>
-                        </div>
-                    </div>
-                </div>
+              {{--<div
+                  class="w-full md:w-4/12 lg:mb-0 mb-12 px-4"
+                  data-aos="flip-right"
+              >
+                  <div class="px-6">
+                      <img
+                          alt="..."
+                          src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                          class="shadow-lg rounded max-w-full mx-auto"
+                          style="max-width: 350px"
+                      />
+                      <div class="pt-6 text-center">
+                          <h5 class="text-xl font-bold dark:text-gray-200">Ronald McDonald</h5>
+                          <p class="mt-1 text-sm text-gray-500 uppercase font-semibold dark:text-gray-50">
+                              Double Whoopass With Cheese
+                          </p>
+                      </div>
+                  </div>
+              </div>--}}
             </div>
         </div>
     </div>
@@ -201,7 +200,7 @@
 <section
     id="contact_us"
     class="bg-cover bg-no-repeat bg-fixed"
-         style="background-image: url({{ asset('img/gym.jpg') }})"
+         style="background-image: url({{ asset('img/gym/gym.jpeg') }})"
 {{--    style="background-color: #667eea"--}}
     >
     <div class="container mx-auto px-6 text-center py-20">
