@@ -20,7 +20,7 @@ class DashboardController extends Controller
       $this->newMembers = FeeStructure::where('admission_date', 'Like', '%' . $currentYearMonth. '%')->count();
       $this->pendingDues = $FeePendingMembers->count();
     }
-    $unPaidMembers = $FeePendingMembers->get()->random(5);
+    $unPaidMembers = $FeePendingMembers->get();
     return view('dashboard', compact('totalMembers', 'totalAmount', 'unPaidMembers'))
       ->with('newMembers', $this->newMembers)
       ->with('pendingDues', $this->pendingDues);
