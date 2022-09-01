@@ -23,8 +23,8 @@
         </x-button>
       </a>
   </div>
-  <div class="w-full overflow-hidden rounded-lg shadow-xs">
-    <div class="w-full">
+  <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
+    <div class="w-full overflow-x-auto">
       <x-table>
         <x-slot name="head">
           <x-table.heading sortable wire:click="sortBy('gym_id')"
@@ -33,8 +33,8 @@
           <x-table.heading sortable wire:click="sortBy('firstname')"
                            :direction="$sortField === 'firstname' ? $sorDirection : null ">Name
           </x-table.heading>
-          <x-table.heading sortable wire:click="sortBy('email')"
-                           :direction="$sortField === 'email' ? $sorDirection : null ">Email
+          <x-table.heading sortable wire:click="sortBy('monthly_fee')"
+                           :direction="$sortField === 'monthly_fee' ? $sorDirection : null ">Fee Amount
           </x-table.heading>
           <x-table.heading sortable wire:click="sortBy('phone')"
                            :direction="$sortField === 'phone' ? $sorDirection : null ">Phone
@@ -42,36 +42,39 @@
           <x-table.heading sortable wire:click="sortBy('admission_date')"
                            :direction="$sortField === 'admission_date' ? $sorDirection : null ">Admission Date
           </x-table.heading>
+          <x-table.heading>Fee Status</x-table.heading>
           <x-table.heading>Fee Date</x-table.heading>
-          {{--          <x-table.heading>Due Fee</x-table.heading>--}}
-
           <x-table.heading>Actions</x-table.heading>
 
         </x-slot>
         <x-slot name="body">
           @forelse($users as $user)
             <x-table.row wire:loading.class.delay="opacity-50">
-              <x-table.cell class="font-semibold text-center">{{ $user->gym_id }}</x-table.cell>
+              <x-table.cell class="font-semibold text-center">
+                    {{ $user->gym_id  }}
+              </x-table.cell>
               <x-table.cell>
                 <div class="flex items-center text-sm">
-                  <!-- Avatar with inset shadow -->
                   <div>
-                    <p class="font-semibold mb-1">{{ $user->full_name  }}</p>
-                    <span
-                      class="px-2 py-1 text-xs font-semibold leading-tight  rounded-full
-                    text-{{ ($user->feeStructure->status = 'Paid' &&  (feeDueDateStatus($user) > 0)) ? 'green' : 'red' }}-700
-                    bg-{{ ($user->feeStructure->status = 'Paid' &&  (feeDueDateStatus($user) > 0)) ? 'green' : 'red' }}-100
-                    dark:text-white dark:bg-{{ ($user->feeStructure->status = 'Paid' &&  (feeDueDateStatus($user) > 0))  ? 'green' : 'red' }}-600">
-                    @if( feeDueDateStatus($user) > 0 && $user->feeStructure->status = 'Paid')
-                        Paid
-                      @else
-                        Unpaid
-                      @endif
-                </span>
+                    <p class="font-semibold">{{ $user->full_name  }}</p>
+                    <p class="text-xs text-gray-600 dark:text-gray-400">
+                      {{ $user->email  }}
+                    </p>
                   </div>
                 </div>
               </x-table.cell>
-              <x-table.cell>{{ $user->email }}</x-table.cell>
+              <x-table.cell>
+                <div class="flex items-center">
+                  <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400"><span
+                        class="font-semibold">Monthly Fee: </span>{{ $user->feeStructure->monthly_fee  ?? 'N/A'  }}
+                    </p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400"><span
+                        class="font-semibold">Admission Fee: </span>{{ $user->feeStructure->admission_fee ?? 'N/A' }}
+                    </p>
+                  </div>
+                </div>
+              </x-table.cell>
               <x-table.cell>
                 <div class="flex items-center">
                   <div>
@@ -84,8 +87,21 @@
                   </div>
                 </div>
               </x-table.cell>
+              <x-table.cell class="font-semibold text-sm">
+                {{ \Carbon\Carbon::parse($user->feeStructure->admission_date)->format('d M, Y')}}
+              </x-table.cell>
+
               <x-table.cell>
-                {{ \Carbon\Carbon::parse($user->feeStructure->admission_date)->format('M d, Y')}}
+
+                    <span class="px-5 py-1 text-sm text-white rounded-md cursor-pointer text-white font-semibold
+                        bg-{{ ($user->feeStructure->status = 'Paid' &&  (feeDueDateStatus($user) > 0)) ? 'green' : 'red' }}-500
+                        dark:text-white dark:bg-{{ ($user->feeStructure->status = 'Paid' &&  (feeDueDateStatus($user) > 0))  ? 'green' : 'red' }}-600 uppercase">
+                        @if( feeDueDateStatus($user) > 0 && $user->feeStructure->status = 'Paid')
+                          Paid
+                        @else
+                          Unpaid
+                        @endif
+                    </span>
               </x-table.cell>
 
               <x-table.cell>
@@ -146,7 +162,7 @@
             </x-table.row>
           @empty
             <x-table.row>
-              <x-table.cell colspan="7">
+              <x-table.cell colspan="8">
                 <div class="flex justify-center items-center space-x-2">
 
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cool-gray-400"
